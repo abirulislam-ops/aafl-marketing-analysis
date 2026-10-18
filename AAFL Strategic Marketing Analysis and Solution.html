@@ -37,6 +37,9 @@ nav .wrap{display:flex;flex-wrap:wrap;gap:2px;padding:0 8px}
 nav a{font-size:13px;text-decoration:none;color:var(--muted);padding:13px 14px;border-bottom:3px solid transparent;font-weight:500;white-space:nowrap}
 nav a:hover{color:var(--navy)}
 nav a.active{color:var(--navy);border-bottom-color:var(--akij);font-weight:700;background:var(--navy-soft)}
+a.src{color:var(--akij);text-decoration:none;border-bottom:1px dotted var(--akij)}
+a.src:hover{text-decoration:underline}
+a.src::after{content:" ↗";font-size:11px;opacity:.8}
 /* ===== SECTIONS ===== */
 section{scroll-margin-top:72px}
 h2{font-size:21px;margin:46px 0 6px;color:var(--navy)}
@@ -119,7 +122,7 @@ footer{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);font-si
 <div class="hero">
   <div class="wrap">
     <h1>AKIJ Agro Feed Ltd · Strategic Marketing Analysis · Q1 FY27 Review and Q2 Plan</h1>
-    <p class="lede">Part A reviews Q1 FY 2026-27 (Jul–Sep 2026) using Q1 actuals, the FY 2026-27 marketing budget and industry sales to Jul'26. Part B turns each Q1 finding into a Q2 (Oct–Dec 2026) action with a budget, an owner and a target. Offline competitor activity is still being collected; competitor digital presence data is now included.</p>
+    <p class="lede">Q1 FY 2026-27 (Jul–Sep 2026): ৳322.6 Cr revenue at 104% of the volume target, with volume up 90% on 2025 against an industry growing 5.1%. Marketing-led revenue reached ৳148.6 Cr (1.57× the 30% target) and profit ROMI ran 17.1–58.6×; Akij holds a 2.4% share, ranked #15 of 22. Part B turns each finding into a Q2 (Oct–Dec 2026) action with a budget, an owner and a target.</p>
     <div class="hero-kpis">
       <div class="hkpi"><div class="label">Q1 revenue</div><div class="val">৳322.6 Cr</div><div class="note">104% of volume target</div></div>
       <div class="hkpi"><div class="label">Q1 profit ROMI (bottom line)</div><div class="val">17.1–58.6×</div><div class="note">By campaign period · overall topline 19.9×</div></div>
@@ -168,7 +171,7 @@ footer{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);font-si
 
   <div class="grid two" style="margin-top:14px">
     <div class="card tablewrap">
-      <h3>Marketing-led revenue vs target (Summary tab)</h3>
+      <h3>Marketing-led Revenue vs Target</h3>
       <table>
         <tr><th>Month</th><th>Actual revenue</th><th>Mkt-led revenue</th><th>Marketing Revenue Target</th><th>Gap</th><th>Achievement</th></tr>
         <tr><td>Jul</td><td>92.94</td><td>15.98</td><td>29.16</td><td class="neg">−13.19</td><td class="neg">0.55×</td></tr>
@@ -179,7 +182,7 @@ footer{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);font-si
       <div class="legend">BDT crore. Target = 30% of the monthly sales target.</div>
     </div>
     <div class="card tablewrap">
-      <h3>ROMI by campaign period (Details tab)</h3>
+      <h3>ROMI by Campaign Period</h3>
       <table>
         <tr><th>Period</th><th>Campaigns</th><th>Topline ROMI</th><th>Profit ROMI</th></tr>
         <tr><td>July</td><td>7</td><td class="pos">112.0×</td><td class="pos">17.1×</td></tr>
@@ -230,6 +233,33 @@ footer{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);font-si
       <tr class="total"><td class="l" colspan="2">Total</td><td>17,402,548</td><td>19.9× / —</td></tr>
     </table>
     <div class="legend">All AAFL campaigns in Q1 FY27. Topline ROMI = (mkt-led revenue − spend) ÷ spend; profit ROMI = (mkt-led profit − spend) ÷ spend at 16% margin.</div>
+    </div>
+  </div>
+
+  <div class="grid two" style="margin-top:14px">
+    <div class="card tablewrap">
+      <h3>Top 5 marketing campaigns (by spend)</h3>
+      <table>
+        <tr><th>#</th><th class="l">Campaign</th><th class="l">Category</th><th>Spend (BDT)</th><th>Mkt-led revenue</th></tr>
+        <tr><td>1</td><td class="l">Profile Light Box</td><td class="l">Outdoor</td><td>2,320,000</td><td>86.4 Cr</td></tr>
+        <tr><td>2</td><td class="l">Caravan Activation (Cattle Feed)</td><td class="l">BTL</td><td>2,290,532</td><td>25.9 Cr</td></tr>
+        <tr><td>3</td><td class="l">Folding Umbrella</td><td class="l">Gift &amp; Printing</td><td>2,115,000</td><td>59.6 Cr</td></tr>
+        <tr><td>4</td><td class="l">Long Term Dealer Benefit</td><td class="l">Trade Incentive</td><td>1,843,360</td><td>38.3 Cr</td></tr>
+        <tr><td>5</td><td class="l">Model Farm Branding</td><td class="l">Outdoor</td><td>1,841,760</td><td>20.8 Cr</td></tr>
+      </table>
+      <div class="legend">Top five by Q1 marketing expense (৳104.1 lakh, 60% of Q1 spend). Mkt-led revenue = sheet's per-campaign allocation over its campaign period.</div>
+    </div>
+    <div class="card tablewrap">
+      <h3>Bottom 5 marketing campaigns (by spend)</h3>
+      <table>
+        <tr><th>#</th><th class="l">Campaign</th><th class="l">Category</th><th>Spend (BDT)</th><th>Mkt-led revenue</th></tr>
+        <tr><td>1</td><td class="l">Gift Box / Card</td><td class="l">Gift &amp; Printing</td><td>22,000</td><td>0.6 Cr</td></tr>
+        <tr><td>2</td><td class="l">Round Neck T-Shirt</td><td class="l">Gift &amp; Printing</td><td>30,000</td><td>1.0 Cr</td></tr>
+        <tr><td>3</td><td class="l">Product Book (Jul)</td><td class="l">Gift &amp; Printing</td><td>57,500</td><td>0.7 Cr</td></tr>
+        <tr><td>4</td><td class="l">Non-folding Umbrella</td><td class="l">Gift &amp; Printing</td><td>60,000</td><td>1.7 Cr</td></tr>
+        <tr><td>5</td><td class="l">Campaign / Online Newspaper / Digital Sponsor (Sep)</td><td class="l">Digital</td><td>60,000</td><td>2.0 Cr</td></tr>
+      </table>
+      <div class="legend">Bottom five by Q1 marketing expense (৳2.3 lakh, 1.3% of Q1 spend). Mkt-led revenue = sheet's per-campaign allocation over its campaign period.</div>
     </div>
   </div>
 
@@ -386,7 +416,7 @@ footer{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);font-si
 <!-- 3 GAPS -->
 <section id="gap">
   <h2><span class="num">3</span>Gap with competitors and plan</h2>
-  <p class="sub">Gap = benchmark − Akij. Positive means Akij is behind.</p>
+  <p class="sub">Gap = benchmark − Akij (a positive value means Akij is behind).</p>
   <div class="card tablewrap">
     <table>
       <tr><th class="l">Performance gap</th><th>Akij</th><th>Benchmark</th><th class="l">Basis</th><th>Gap</th></tr>
@@ -401,6 +431,7 @@ footer{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);font-si
       <tr><td>Digital budget used, Q1</td><td>28%</td><td>100%</td><td class="l">Q1 plan</td><td class="neg">72 pts</td></tr>
       <tr><td>Profit ROMI, Q1 (by period)</td><td>17.1–58.6×</td><td>1.0×</td><td class="l">Minimum hurdle</td><td class="pos">Above in all periods</td></tr>
     </table>
+    <div class="legend"><b>Units of the Gap column:</b> <b>pts</b> = percentage points — the simple difference between two percentages (e.g. 12.4% − 2.4% = 10.0 pts), <i>not</i> a percentage of the benchmark. Plain numbers are volume in <b>MT/month</b>; <b>×</b> is a ROMI multiple. "Ahead / above" means Akij is better than the benchmark; "under" means Akij is behind.</div>
   </div>
 </section>
 
@@ -597,14 +628,14 @@ footer{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);font-si
     <h3>Q2 scorecard (review at the end of each month)</h3>
     <table>
       <tr><th class="l">KPI</th><th>Q1 actual</th><th>Q2 target</th><th class="l">Source</th></tr>
-      <tr><td>Sales volume (MT)</td><td>54,758</td><td>54,000 (plan 51,000)</td><td class="l">Sales Monthwise</td></tr>
-      <tr><td>Market share (industry data)</td><td>2.4% (Jan–Jul'26)</td><td>2.8–3.0%</td><td class="l">Market Share tab</td></tr>
-      <tr><td>Profit ROMI (by period)</td><td>17.1–58.6×</td><td>≥3.0×, measured by campaign</td><td class="l">Details Campaign wise tab</td></tr>
+      <tr><td>Sales volume (MT)</td><td>54,758</td><td>54,000 (plan 51,000)</td><td class="l"><a class="src" href="https://docs.google.com/spreadsheets/d/10bpXlXXJP7cHNjlYUR65LFx2F0Eprf1LYx-aInAMkdM/edit#gid=283767390" target="_blank" rel="noopener">Sales Monthwise</a></td></tr>
+      <tr><td>Market share (industry data)</td><td>2.4% (Jan–Jul'26)</td><td>2.8–3.0%</td><td class="l"><a class="src" href="https://docs.google.com/spreadsheets/d/10bpXlXXJP7cHNjlYUR65LFx2F0Eprf1LYx-aInAMkdM/edit#gid=9003" target="_blank" rel="noopener">Market Share tab</a></td></tr>
+      <tr><td>Profit ROMI (by period)</td><td>17.1–58.6×</td><td>≥3.0×, measured by campaign</td><td class="l"><a class="src" href="https://docs.google.com/spreadsheets/d/10bpXlXXJP7cHNjlYUR65LFx2F0Eprf1LYx-aInAMkdM/edit#gid=1127454682" target="_blank" rel="noopener">Details Campaign wise tab</a></td></tr>
       <tr><td>Share of spend with measured ROMI</td><td>0%</td><td>≥80%</td><td class="l">Campaign briefs</td></tr>
-      <tr><td>Channel utilisation</td><td>5%–430%</td><td>80–120% each</td><td class="l">Budget vs Actual tab</td></tr>
-      <tr><td>Marketing spend % of revenue</td><td>0.55%</td><td>0.8–0.9%</td><td class="l">Budget vs Actual tab</td></tr>
-      <tr><td>Tech seminar KPI</td><td>84%</td><td>100%</td><td class="l">KPI sheet</td></tr>
-      <tr><td>Competitors scored</td><td>0 of 14</td><td>14 of 14</td><td class="l">Competitor tab</td></tr>
+      <tr><td>Channel utilisation</td><td>5%–430%</td><td>80–120% each</td><td class="l"><a class="src" href="https://docs.google.com/spreadsheets/d/10bpXlXXJP7cHNjlYUR65LFx2F0Eprf1LYx-aInAMkdM/edit#gid=9002" target="_blank" rel="noopener">Budget vs Actual tab</a></td></tr>
+      <tr><td>Marketing spend % of revenue</td><td>0.55%</td><td>0.8–0.9%</td><td class="l"><a class="src" href="https://docs.google.com/spreadsheets/d/10bpXlXXJP7cHNjlYUR65LFx2F0Eprf1LYx-aInAMkdM/edit#gid=9002" target="_blank" rel="noopener">Budget vs Actual tab</a></td></tr>
+      <tr><td>Tech seminar KPI</td><td>84%</td><td>100%</td><td class="l"><a class="src" href="https://docs.google.com/spreadsheets/d/10bpXlXXJP7cHNjlYUR65LFx2F0Eprf1LYx-aInAMkdM/edit#gid=1127454682" target="_blank" rel="noopener">KPI sheet</a></td></tr>
+      <tr><td>Competitors scored</td><td>0 of 14</td><td>14 of 14</td><td class="l"><a class="src" href="https://docs.google.com/spreadsheets/d/10bpXlXXJP7cHNjlYUR65LFx2F0Eprf1LYx-aInAMkdM/edit#gid=439886870" target="_blank" rel="noopener">Competitor tab</a></td></tr>
       <tr><td>ICP campaigns live (target customer)</td><td>—</td><td>4 segments covered</td><td class="l">Brand Activation Pack</td></tr>
       <tr><td>Brand maturity gaps closed</td><td>4 No + survey pending</td><td>Research + survey done</td><td class="l">Maturity audit</td></tr>
     </table>
