@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AAFL Strategic Marketing Analysis</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#1b2430; --muted:#5b6675; --line:#e2e6ec;
+  --navy:#1f3864; --navy-soft:#e7ecf5; --akij:#d97706; --akij-soft:#fdf1e1;
+  --good:#1e7a46; --good-soft:#e5f4ea; --bad:#b42318; --bad-soft:#fbe9e7; --bar:#8a9ab3;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#11151b; --card:#1a2029; --ink:#e7ebf0; --muted:#9aa5b4; --line:#2b3340;
+    --navy:#8fb0e8; --navy-soft:#223047; --akij:#f0a43a; --akij-soft:#3a2c17;
+    --good:#5cc98a; --good-soft:#1c3326; --bad:#f08a7e; --bad-soft:#3b1f1c; --bar:#5d6b80;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 16px 60px}
+header{border-bottom:3px solid var(--navy);padding-bottom:16px;margin-bottom:22px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-size:28px;line-height:1.2;margin:6px 0 8px;color:var(--navy)}
+.lede{color:var(--muted);max-width:760px;margin:0}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+nav a{font-size:13px;text-decoration:none;color:var(--navy);background:var(--navy-soft);padding:5px 11px;border-radius:999px}
+h2{font-size:21px;margin:42px 0 6px;color:var(--navy)}
+h2 .num{display:inline-block;min-width:28px;color:var(--muted);font-weight:500}
+.sub{color:var(--muted);margin:0 0 16px}
+h3{font-size:15px;margin:0 0 10px}
+.grid{display:grid;gap:14px}
+.kpis{grid-template-columns:repeat(4,1fr)}
+.two{grid-template-columns:1fr 1fr}
+.three{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.kpi .label{font-size:12.5px;color:var(--muted)}
+.kpi .val{font-size:26px;font-weight:700;margin:4px 0 2px;font-variant-numeric:tabular-nums}
+.kpi .note{font-size:12.5px;color:var(--muted)}
+.callout{border-left:4px solid var(--akij);background:var(--akij-soft);padding:12px 16px;border-radius:6px;margin:14px 0}
+.callout.red{border-color:var(--bad);background:var(--bad-soft)}
+.callout.green{border-color:var(--good);background:var(--good-soft)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;background:var(--navy-soft)}
+tr.total td{font-weight:700;border-top:2px solid var(--line)}
+tr.hl td{background:var(--akij-soft);font-weight:600}
+td.l, th.l{text-align:left}
+.pos{color:var(--good);font-weight:600}
+.neg{color:var(--bad);font-weight:600}
+.tablewrap{overflow-x:auto}
+/* bar charts */
+.bars{display:flex;flex-direction:column;gap:6px}
+.brow{display:grid;grid-template-columns:130px 1fr 64px;align-items:center;gap:10px;font-size:13px}
+.brow .name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{height:16px;background:var(--navy-soft);border-radius:4px;position:relative;overflow:hidden}
+.fill{height:100%;background:var(--bar);border-radius:4px}
+.brow.akij .fill{background:var(--akij)}
+.brow.akij .name,.brow.akij .v{font-weight:700;color:var(--akij)}
+.brow .v{text-align:right;font-variant-numeric:tabular-nums}
+.ref{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.6}
+.util .fill.over{background:var(--bad)}
+.util .fill.under{background:var(--bar)}
+.legend{font-size:12px;color:var(--muted);margin-top:8px}
+/* vertical month chart */
+.vchart{display:flex;align-items:flex-end;gap:22px;height:190px;padding:10px 6px 0;border-bottom:1px solid var(--line);position:relative}
+.vcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.vbar{width:56%;border-radius:4px 4px 0 0;background:var(--navy)}
+.vbar.neg{background:var(--bad)}
+.vlab{font-size:12.5px;color:var(--muted);margin-top:6px}
+.vval{font-weight:700;font-size:13px;margin-bottom:4px}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px}
+.pill.p{background:#e2efda;color:#30572a}.pill.r{background:#fff2cc;color:#6b5100}.pill.t{background:#ddebf7;color:#1f4e79}
+@media (prefers-color-scheme: dark){.pill.p{background:#24361e;color:#b9dfa6}.pill.r{background:#3d3412;color:#f3d77d}.pill.t{background:#1b2d44;color:#a9c9ef}}
+ol.findings{padding-left:20px;margin:0}
+ol.findings li{margin:0 0 8px}
+ul.tight{margin:6px 0 0;padding-left:18px}
+ul.tight li{margin-bottom:4px}
+.ppt h3{display:flex;align-items:center;gap:8px}
+.ppt .item{border-top:1px solid var(--line);padding:10px 0}
+.ppt .item:first-of-type{border-top:0}
+.ppt .item b{display:block;font-size:13.5px}
+.ppt .item span{font-size:12.5px;color:var(--muted)}
+.score{display:inline-block;width:26px;text-align:center;border-radius:4px;background:var(--navy-soft);font-weight:600}
+footer{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+@media (max-width:860px){.kpis{grid-template-columns:1fr 1fr}.two,.three{grid-template-columns:1fr}.brow{grid-template-columns:96px 1fr 56px}}
+@media print{body{background:#fff}.card{break-inside:avoid}nav{display:none}h2{break-after:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">AKIJ Agro Feed Ltd · Strategic Marketing Analysis · Q1 FY27 Review and Q2 Plan</div>
+  <h1>Q1 beat the volume target, but marketing went to gifts and BTL instead of brand building. Q2 has to fix the mix, the measurement and the TVC gap.</h1>
+  <p class="lede">Part A reviews Q1 FY 2026-27 (Jul–Sep 2026) using Q1 actuals, the FY 2026-27 marketing budget and industry sales to Jun'26. Part B turns each Q1 finding into a Q2 (Oct–Dec 2026) action with a budget, an owner and a target. Competitor activity data is still being collected.</p>
+  <nav>
+    <a href="#summary">Summary</a><a href="#romi">1 · Internal / ROMI</a><a href="#market">2 · Competitors</a><a href="#gap">3 · Gaps</a><a href="#ppt">4 · People, Process, Technology</a><a href="#play">5 · Where to play</a><a href="#q2">6 · Q2 action plan</a>
+  </nav>
+</header>
+
+<section id="summary">
+  <div class="grid kpis">
+    <div class="card kpi"><div class="label">Q1 revenue</div><div class="val">৳322.6 Cr</div><div class="note">104% of volume target</div></div>
+    <div class="card kpi"><div class="label">Q1 profit ROMI (corrected)</div><div class="val">4.0x</div><div class="note">Current workbook shows 24.9x</div></div>
+    <div class="card kpi"><div class="label">Market share, H1'26</div><div class="val">2.4%</div><div class="note">Rank #15 of 22 · 1.3% in 2025</div></div>
+    <div class="card kpi"><div class="label">Volume growth vs 2025</div><div class="val">+88%</div><div class="note">Industry +4.8%</div></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Q1 key findings (each one has a Q2 solution in section 6)</h3>
+    <ol class="findings">
+      <li><b>Growth is real.</b> H1'26 volume is up 88% on 2025 while the industry grew 4.8%, the fastest of all named companies.</li>
+      <li><b>Q1 beat plan.</b> 104% of the volume target: July missed (96%), August and September beat it (108–109%).</li>
+      <li><b>Marketing paid back about 4x in gross profit</b> against the Jan–Jun'26 sales run-rate. July did not pay back (−0.2x).</li>
+      <li><b>The current ROMI workbook overstates returns</b> and cannot show which campaign worked.</li>
+      <li><b>Spend shifted away from brand building.</b> ATL used 5% and Digital 28% of plan, while BTL ran at 430% and Gift & Printing at 261%.</li>
+      <li><b>To reach #13 (Provita)</b>, Akij needs about 6,150 MT more per month than its Q1 run-rate.</li>
+      <li><b>Draft focus:</b> lead with cattle feed, then fish feed; hold position in poultry.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 1 INTERNAL -->
+<section id="romi">
+  <h2><span class="num">1</span>Internal analysis: ROMI</h2>
+  <p class="sub">Corrected ROMI uses Akij's Jan–Jun'26 run-rate (15,128 MT/month ≈ ৳89.1 Cr) as the base, actual spend from the Budget Tracker, and a 16% gross margin.</p>
+
+  <div class="grid two">
+    <div class="card">
+      <h3>Profit ROMI by month</h3>
+      <div class="vchart" id="romiChart"></div>
+      <div class="legend">ROMI = (incremental gross profit − spend) ÷ spend. Break-even is 0x.</div>
+    </div>
+    <div class="card tablewrap">
+      <h3>Monthly ROMI build-up (BDT)</h3>
+      <table>
+        <tr><th>Metric</th><th>Jul</th><th>Aug</th><th>Sep</th><th>Q1</th></tr>
+        <tr><td>Revenue (Cr)</td><td>92.9</td><td>111.4</td><td>118.3</td><td>322.6</td></tr>
+        <tr><td>Base revenue (Cr)</td><td>89.1</td><td>89.1</td><td>89.1</td><td>267.4</td></tr>
+        <tr><td>Incremental revenue (Cr)</td><td>3.8</td><td>22.3</td><td>29.2</td><td>55.2</td></tr>
+        <tr><td>Marketing spend (lakh)</td><td>76.3</td><td>55.2</td><td>46.4</td><td>177.9</td></tr>
+        <tr><td>Incremental GP (lakh)</td><td>61.0</td><td>356.2</td><td>466.5</td><td>883.7</td></tr>
+        <tr><td>Revenue ROMI</td><td>4.0x</td><td>39.3x</td><td>61.8x</td><td>30.0x</td></tr>
+        <tr class="total"><td>Profit ROMI</td><td class="neg">−0.2x</td><td class="pos">5.4x</td><td class="pos">9.0x</td><td class="pos">4.0x</td></tr>
+        <tr><td>Volume vs target</td><td>96%</td><td>108%</td><td>109%</td><td>104%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid two" style="margin-top:14px">
+    <div class="card">
+      <h3>Why the current workbook overstates ROMI</h3>
+      <ul class="tight">
+        <li><b>Base too low:</b> 28.48 Cr/month vs an actual run-rate of ~89 Cr, so sales that existed before Q1 are counted as marketing-led.</li>
+        <li><b>Revenue split by spend share:</b> every campaign in a month gets the same ROMI, so the sheet measures the month, not the campaign.</li>
+        <li><b>Double counting:</b> Profile Light Box claims 100% of Aug–Sep incremental revenue that Aug and Sep campaigns also claim. Campaign rows add up to ৳402.6 Cr against ৳55.2 Cr of real incremental revenue.</li>
+        <li><b>Total row cut short:</b> spend sums only rows 3–12 (৳80.3 lakh of ৳174.0 lakh), which is why profit ROMI (24.9x) shows higher than revenue ROMI (19.9x).</li>
+        <li><b>Spend mismatches</b> with the Budget Tracker (T-shirt, dealer benefit, profile light box, Model Farm lines swapped).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Q1 budget utilisation by channel</h3>
+      <div class="bars util" id="utilChart"></div>
+      <div class="legend">Line marks 100% of the Q1 plan. Red = over plan.</div>
+    </div>
+  </div>
+
+  <div class="card tablewrap" style="margin-top:14px">
+    <h3>Q1 budget vs actual (BDT)</h3>
+    <table>
+      <tr><th>Channel</th><th>Q1 budget</th><th>Q1 actual</th><th>Variance</th><th>Utilisation</th><th>Share of actual</th><th>FY budget</th><th>Remaining FY</th></tr>
+      <tr><td>ATL</td><td>4,940,000</td><td>270,000</td><td>(4,670,000)</td><td class="neg">5%</td><td>2%</td><td>17,660,000</td><td>17,390,000</td></tr>
+      <tr><td>Digital</td><td>3,185,000</td><td>877,000</td><td>(2,308,000)</td><td class="neg">28%</td><td>5%</td><td>20,285,000</td><td>19,408,000</td></tr>
+      <tr><td>BTL</td><td>1,270,000</td><td>5,464,292</td><td>4,194,292</td><td class="neg">430%</td><td>31%</td><td>28,860,000</td><td>23,395,708</td></tr>
+      <tr><td>Outdoor</td><td>6,128,202</td><td>4,676,590</td><td>(1,451,612)</td><td>76%</td><td>26%</td><td>22,861,502</td><td>18,184,912</td></tr>
+      <tr><td>Gift &amp; Printing</td><td>2,341,500</td><td>6,116,500</td><td>3,775,000</td><td class="neg">261%</td><td>34%</td><td>8,773,500</td><td>2,657,000</td></tr>
+      <tr><td>Long Term Dealer Benefit</td><td>390,000</td><td>390,000</td><td>–</td><td>100%</td><td>2%</td><td>1,560,000</td><td>1,170,000</td></tr>
+      <tr class="total"><td>Total</td><td>18,254,702</td><td>17,794,382</td><td>(460,320)</td><td>97%</td><td>100%</td><td>100,000,002</td><td>82,205,620</td></tr>
+    </table>
+    <div class="callout">Q1 spend was 0.55% of revenue against a 0.81% FY plan. Gift &amp; Printing has only ৳26.6 lakh left for the next nine months.</div>
+  </div>
+</section>
+
+<!-- 2 COMPETITORS -->
+<section id="market">
+  <h2><span class="num">2</span>Competitor analysis</h2>
+  <p class="sub">Commercial feed volume (MT), monthly average Jan–Jun'26 vs 2025. Industry: 635,330 MT/month.</p>
+  <div class="grid two">
+    <div class="card">
+      <h3>Market share, H1'26</h3>
+      <div class="bars" id="shareChart"></div>
+    </div>
+    <div class="card">
+      <h3>Growth, H1'26 vs 2025 average</h3>
+      <div class="bars" id="growthChart"></div>
+      <div class="legend">Line marks industry growth (+4.8%).</div>
+    </div>
+  </div>
+
+  <div class="grid two" style="margin-top:14px">
+    <div class="card tablewrap">
+      <h3>The ladder above Akij</h3>
+      <table>
+        <tr><th>Rank</th><th class="l">Company</th><th>H1'26 MT/month</th><th>Gap vs Akij Q1 run-rate</th></tr>
+        <tr><td>14</td><td class="l">Astha</td><td>21,012</td><td>2,759</td></tr>
+        <tr><td>13</td><td class="l">Provita</td><td>24,405</td><td>6,152</td></tr>
+        <tr><td>12</td><td class="l">Teer Feed</td><td>24,535</td><td>6,283</td></tr>
+        <tr><td>11</td><td class="l">Kazi</td><td>24,857</td><td>6,604</td></tr>
+        <tr><td>10</td><td class="l">Aman</td><td>27,368</td><td>9,115</td></tr>
+        <tr><td>5</td><td class="l">C.P</td><td>37,892</td><td>19,639</td></tr>
+        <tr><td>1</td><td class="l">Nourish</td><td>80,381</td><td>62,129</td></tr>
+        <tr class="hl"><td>–</td><td class="l">Akij, Q1 FY27</td><td>18,253</td><td>–</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>What the competitor data says</h3>
+      <ul class="tight">
+        <li><b>Provita is the closest model:</b> it almost doubled (+97%) to 3.8% share in six months, the same jump Akij is attempting.</li>
+        <li><b>Kazi is losing volume</b> (−31%) and Aftab (−9%), so share is available in the 3–4% tier.</li>
+        <li><b>New Hope and ACI grew ~19–20%</b>, the strongest growth among the top ten.</li>
+        <li><b>Akij's Q1 run-rate (18,253 MT)</b> already beats its FY target average (17,500) and would put it at ~2.9% share.</li>
+      </ul>
+      <div class="callout">Competitor ATL, BTL and digital activity is still being gathered. The workbook's Competitor tab is ready for it; scoring will rank the channel gaps automatically.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 GAPS -->
+<section id="gap">
+  <h2><span class="num">3</span>Gap with competitors and plan</h2>
+  <p class="sub">Gap = benchmark − Akij. Positive means Akij is behind.</p>
+  <div class="card tablewrap">
+    <table>
+      <tr><th class="l">Performance gap</th><th>Akij</th><th>Benchmark</th><th class="l">Basis</th><th>Gap</th></tr>
+      <tr><td>Market share, H1'26</td><td>2.4%</td><td>12.7%</td><td class="l">Leader: Nourish</td><td class="neg">10.3 pts</td></tr>
+      <tr><td>Monthly volume vs #14 (MT)</td><td>18,253</td><td>21,012</td><td class="l">Astha</td><td class="neg">2,759</td></tr>
+      <tr><td>Monthly volume vs #13 (MT)</td><td>18,253</td><td>24,405</td><td class="l">Provita</td><td class="neg">6,152</td></tr>
+      <tr><td>Monthly volume vs #10 (MT)</td><td>18,253</td><td>27,368</td><td class="l">Aman</td><td class="neg">9,115</td></tr>
+      <tr><td>Growth vs 2025</td><td>88.4%</td><td>4.8%</td><td class="l">Industry</td><td class="pos">Ahead 83.6 pts</td></tr>
+      <tr><td>Q1 volume target achievement</td><td>104%</td><td>100%</td><td class="l">Plan</td><td class="pos">Ahead 4 pts</td></tr>
+      <tr><td>Marketing spend % of revenue</td><td>0.55%</td><td>0.81%</td><td class="l">FY plan</td><td class="neg">0.26 pts under</td></tr>
+      <tr><td>ATL budget used, Q1</td><td>5%</td><td>100%</td><td class="l">Q1 plan</td><td class="neg">95 pts</td></tr>
+      <tr><td>Digital budget used, Q1</td><td>28%</td><td>100%</td><td class="l">Q1 plan</td><td class="neg">72 pts</td></tr>
+      <tr><td>Profit ROMI, Q1</td><td>4.0x</td><td>1.0x</td><td class="l">Minimum hurdle</td><td class="pos">Above by 3.0x</td></tr>
+      <tr><td>Profit ROMI, July</td><td>−0.2x</td><td>0.0x</td><td class="l">Break-even</td><td class="neg">Did not pay back</td></tr>
+    </table>
+  </div>
+
+  <div class="card tablewrap" style="margin-top:14px">
+    <h3>Capability gaps</h3>
+    <table>
+      <tr><th class="l">Gap</th><th class="l">Evidence</th><th class="l">Likely cause</th><th class="l">Fixed by</th></tr>
+      <tr><td>Brand awareness / share of voice</td><td class="l">ATL 5%, Digital 28% of Q1 plan; no TVC aired</td><td class="l">TVC and media plan not started; money moved to gifts and BTL</td><td class="l">Process, Technology</td></tr>
+      <tr><td>Scale vs next tier</td><td class="l">18,253 vs 24,405 MT/month for #13</td><td class="l">Dealer coverage and farmer base still building</td><td class="l">People</td></tr>
+      <tr><td>Spend discipline</td><td class="l">BTL 430%, Gift &amp; Printing 261% of plan</td><td class="l">No approval gate for over-plan lines</td><td class="l">Process</td></tr>
+      <tr><td>Campaign-level ROMI</td><td class="l">Same ROMI for every campaign; partial totals</td><td class="l">Sales not tracked by territory or campaign</td><td class="l">Process, Technology</td></tr>
+      <tr><td>July payback</td><td class="l">৳76.3 lakh spent for 647 MT over base</td><td class="l">Large activation and model-farm spend in one month</td><td class="l">Process</td></tr>
+      <tr><td>Farmer and dealer engagement</td><td class="l">Tech seminars 84% of KPI (38/45); onboarding 100% (317/316)</td><td class="l">Seminar capacity limited by field team</td><td class="l">People</td></tr>
+      <tr><td>Competitor intelligence</td><td class="l">Competitor activity not tracked in a structured way</td><td class="l">No regular routine</td><td class="l">Process, People</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 4 PPT -->
+<section id="ppt">
+  <h2><span class="num">4</span>Closing the gap: People, Process, Technology</h2>
+  <p class="sub">Each action ties to a gap above and to an existing FY 2026-27 budget line. Owners and targets are proposals for the team to confirm.</p>
+  <div class="grid three ppt">
+    <div class="card">
+      <h3><span class="pill p">PEOPLE</span></h3>
+      <div class="item"><b>Expand technical service officers in priority territories</b><span>Seminar KPI ≥100%, repeat-order rate · BTL: Farmers/Retailer Seminar</span></div>
+      <div class="item"><b>Dealer development programme</b><span>New dealers in uncovered upazilas, dealer training · BTL: Dealer Meet, Halkhata</span></div>
+      <div class="item"><b>Clear ownership of ATL/digital and competitor tracking</b><span>All 14 competitors scored by Dec-26 · Research</span></div>
+      <div class="item"><b>Farmer advocates from model farms and Best Farmer Award</b><span>Testimonials, seminar attendance · BTL: Model Farm</span></div>
+    </div>
+    <div class="card">
+      <h3><span class="pill r">PROCESS</span></h3>
+      <div class="item"><b>Test-and-control ROMI for every campaign over ৳5 lakh</b><span>80% of spend measured; profit ROMI above hurdle</span></div>
+      <div class="item"><b>Budget guardrails</b><span>Approval above 120% of plan; unspent ATL/digital re-phased, not moved to gifts</span></div>
+      <div class="item"><b>Seasonal campaign calendar by species</b><span>Fish in monsoon, poultry before winter, cattle before Eid-ul-Adha; pilot before national roll-out</span></div>
+      <div class="item"><b>Tiered growth incentive for dealers</b><span>Pay on growth over each dealer's own baseline; Q3 pilot</span></div>
+      <div class="item"><b>Monthly competitor tracking routine</b><span>Tracker updated by the 10th of each month</span></div>
+    </div>
+    <div class="card">
+      <h3><span class="pill t">TECHNOLOGY</span></h3>
+      <div class="item"><b>Trackable codes on leaflets, product books and gifts</b><span>QR / missed-call / dealer code → leads per campaign</span></div>
+      <div class="item"><b>Territory-level secondary sales data</b><span>DMS or standard dealer sheet; all territories by Q4</span></div>
+      <div class="item"><b>Digital content programme</b><span>Farm-advice video, vet influencers, seasonal boosts · Digital: OVC, Influencer</span></div>
+      <div class="item"><b>Farmer helpline / WhatsApp advisory</b><span>Queries by species and region · Digital: SMS & Others</span></div>
+      <div class="item"><b>Live dashboard on the analysis workbook</b><span>Share, ROMI and budget in the monthly review</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 PLAY -->
+<section id="play">
+  <h2><span class="num">5</span>Where to play and how to win</h2>
+  <p class="sub">Segment scores (1–5) are a draft for the team to test against Akij sales by species. Weights: size 25%, growth 20%, right to win 25%, competitive intensity 15%, margin 15%.</p>
+  <div class="grid two">
+    <div class="card tablewrap">
+      <h3>Segment priority</h3>
+      <table>
+        <tr><th class="l">Segment</th><th>Size</th><th>Growth</th><th>Right to win</th><th>Intensity</th><th>Margin</th><th>Score</th></tr>
+        <tr class="hl"><td>1. Cattle feed</td><td><span class="score">3</span></td><td><span class="score">5</span></td><td><span class="score">4</span></td><td><span class="score">3</span></td><td><span class="score">4</span></td><td>3.80</td></tr>
+        <tr class="hl"><td>2. Fish feed</td><td><span class="score">4</span></td><td><span class="score">4</span></td><td><span class="score">3</span></td><td><span class="score">2</span></td><td><span class="score">3</span></td><td>3.30</td></tr>
+        <tr><td>3. Sonali / cross-bred</td><td><span class="score">3</span></td><td><span class="score">4</span></td><td><span class="score">2</span></td><td><span class="score">3</span></td><td><span class="score">3</span></td><td>2.95</td></tr>
+        <tr><td>4. Layer feed</td><td><span class="score">4</span></td><td><span class="score">3</span></td><td><span class="score">2</span></td><td><span class="score">2</span></td><td><span class="score">3</span></td><td>2.85</td></tr>
+        <tr><td>5. Broiler feed</td><td><span class="score">5</span></td><td><span class="score">3</span></td><td><span class="score">2</span></td><td><span class="score">1</span></td><td><span class="score">2</span></td><td>2.80</td></tr>
+      </table>
+      <div class="legend">Intensity: 5 = less crowded. Cattle scores high on right to win because the caravan activation and model farms are already running.</div>
+    </div>
+    <div class="card">
+      <h3>How to win: strategic choices</h3>
+      <table>
+        <tr><td class="l" style="width:34%"><b>Aspiration</b></td><td class="l">Deliver 210,000 MT in FY 2026-27 and move from #15 into the top 13.</td></tr>
+        <tr><td class="l"><b>Segments</b></td><td class="l">Lead with cattle and fish feed; hold position in poultry.</td></tr>
+        <tr><td class="l"><b>Regions</b></td><td class="l">Territories where Akij share is below its national share and dealers already exist.</td></tr>
+        <tr><td class="l"><b>Customers</b></td><td class="l">Small and mid-size commercial farms through dealers, with model farms as references.</td></tr>
+        <tr><td class="l"><b>How to win</b></td><td class="l">Technical-service-led selling (farm advice, model-farm results, seminars) backed by the Akij group name, with ATL and digital in species seasons.</td></tr>
+        <tr><td class="l"><b>Systems</b></td><td class="l">Monthly share and competitor tracker, test-and-control ROMI, budget guardrails.</td></tr>
+      </table>
+    </div>
+  </div>
+
+</section>
+
+<!-- 6 Q2 PLAN -->
+<section id="q2">
+  <h2><span class="num">6</span>Q2 action plan: October–December 2026</h2>
+  <p class="sub">Part B. Each Q1 finding becomes a Q2 solution with a budget line, owner, timing and target. Q2 has already started (two weeks in), so October actions are urgent.</p>
+
+  <div class="grid kpis">
+    <div class="card kpi"><div class="label">Q2 sales target (plan)</div><div class="val">51,000 MT</div><div class="note">৳300.5 Cr · Oct 18.5k, Nov 16.5k, Dec 16.0k</div></div>
+    <div class="card kpi"><div class="label">Proposed stretch target</div><div class="val">54,000 MT</div><div class="note">Hold ~18,000 MT/month; plan is 7% below Q1 actual</div></div>
+    <div class="card kpi"><div class="label">Q2 marketing budget</div><div class="val">৳2.73 Cr</div><div class="note">Plus ৳4.6 lakh net unspent from Q1</div></div>
+    <div class="card kpi"><div class="label">Q2 profit ROMI target</div><div class="val">≥ 3.0x</div><div class="note">Measured with test-and-control</div></div>
+  </div>
+
+  <div class="callout red"><b>Fix now: the TVC gap.</b> The Q2 plan pays ৳16 lakh to air the TVC in October and November, but the TVC planned for August was never made, and TVC production is scheduled only for December. Bring the ৳25 lakh TVC production forward from December to October so airing can start in November, and drop October airing. This needs no extra money.</div>
+
+  <div class="card tablewrap" style="margin-top:14px">
+    <h3>From Q1 finding to Q2 solution</h3>
+    <table>
+      <tr><th class="l" style="width:20%">Q1 finding</th><th class="l" style="width:30%">Q2 solution</th><th class="l">Pillar</th><th class="l">Owner</th><th class="l">When</th><th class="l">Q2 target</th></tr>
+      <tr><td>ATL used 5% of plan; no TVC made</td><td class="l">Bring TVC production forward from December to October; air November–December; drop October airing</td><td class="l"><span class="pill r">PROCESS</span></td><td class="l">Brand Manager</td><td class="l">TVC ready by 15 Nov</td><td class="l">TVC on air ≥6 weeks; ATL use 80–120% of Q2 plan</td></tr>
+      <tr><td>Digital used 28% of plan</td><td class="l">Launch the planned OVC in October; monthly farm-advice content calendar; boost posts in the winter-poultry window</td><td class="l"><span class="pill t">TECH</span></td><td class="l">Brand Manager, Digital Agency</td><td class="l">From Oct</td><td class="l">Digital use ≥80%; reach and leads baseline set</td></tr>
+      <tr><td>BTL 430%, Gift &amp; Printing 261% of plan</td><td class="l">Cap both at the Q2 plan; any line above 120% needs SBU Head approval; Gift &amp; Printing limited to the wall calendar, leaflets and doctor bags</td><td class="l"><span class="pill r">PROCESS</span></td><td class="l">Brand Manager, SBU Head</td><td class="l">From 20 Oct</td><td class="l">No channel above 120%; Gift &amp; Printing ≤ ৳12 lakh</td></tr>
+      <tr><td>ROMI not measurable by campaign</td><td class="l">Campaign brief with baseline and a comparison area for every campaign above ৳5 lakh (National Dealer Meet, activation, Best Farmer Award, TVC)</td><td class="l"><span class="pill r">PROCESS</span></td><td class="l">Marketing Manager, Finance</td><td class="l">Template by 31 Oct</td><td class="l">≥80% of Q2 spend measured; profit ROMI ≥3.0x</td></tr>
+      <tr><td>Leads cannot be traced</td><td class="l">QR / missed-call / dealer code on the wall calendar, new leaflets and POSM going out in October</td><td class="l"><span class="pill t">TECH</span></td><td class="l">Marketing</td><td class="l">Before print, Oct</td><td class="l">Leads per campaign reported monthly</td></tr>
+      <tr><td>July spend did not pay back</td><td class="l">Pilot the October activation in 2–3 districts with a comparison area before national roll-out</td><td class="l"><span class="pill r">PROCESS</span></td><td class="l">Brand Manager, RSMs</td><td class="l">Oct pilot, read in Nov</td><td class="l">Pilot districts beat comparison areas</td></tr>
+      <tr><td>Scale gap to #13 (~6,150 MT/month)</td><td class="l">Use the October National Dealer Meet to launch a dealer-development drive and set new-dealer targets per RSM</td><td class="l"><span class="pill p">PEOPLE</span></td><td class="l">Head of Sales, RSMs</td><td class="l">Oct meet, monthly review</td><td class="l">New-dealer target set per territory; volume ≥54,000 MT</td></tr>
+      <tr><td>Tech seminars at 84% of KPI</td><td class="l">Assign technical officers to seminar quotas; prioritise winter poultry and cattle-fattening topics</td><td class="l"><span class="pill p">PEOPLE</span></td><td class="l">Technical Service Head</td><td class="l">Oct–Dec</td><td class="l">Seminar KPI 100% (45/month)</td></tr>
+      <tr><td>Dealer benefit is flat, not growth-linked</td><td class="l">Design the tiered growth incentive in Q2, ready for a Q3 pilot</td><td class="l"><span class="pill r">PROCESS</span></td><td class="l">Sales, Marketing, Finance</td><td class="l">Design by Dec</td><td class="l">Scheme approved for Q3 pilot</td></tr>
+      <tr><td>No competitor activity data</td><td class="l">Fill the Competitor scorecard; log competitor activity monthly; refresh market share when Jul–Sep industry data arrives</td><td class="l"><span class="pill p">PEOPLE</span></td><td class="l">Market Intelligence</td><td class="l">Monthly, by the 10th</td><td class="l">All 14 competitors scored by Dec</td></tr>
+      <tr><td>Segment focus not set</td><td class="l">Validate segment scores with sales by species; start cattle-fattening outreach in December for the Eid-ul-Adha cycle</td><td class="l"><span class="pill p">PEOPLE</span></td><td class="l">Brand Manager, Sales</td><td class="l">Validate Nov, launch Dec</td><td class="l">Species split in monthly report</td></tr>
+    </table>
+  </div>
+
+  <div class="grid two" style="margin-top:14px">
+    <div class="card tablewrap">
+      <h3>Proposed Q2 budget by channel (BDT)</h3>
+      <table>
+        <tr><th>Channel</th><th>Q2 plan</th><th>Proposed</th><th>Change</th><th class="l">Reason</th></tr>
+        <tr><td>ATL</td><td>8,040,000</td><td>8,040,000</td><td>–</td><td class="l">Re-sequence: TVC made in Oct, aired Nov–Dec</td></tr>
+        <tr><td>Digital</td><td>5,650,000</td><td>6,650,000</td><td class="pos">+1,000,000</td><td class="l">Part of Q1 unspent digital; content and seasonal boosts</td></tr>
+        <tr><td>BTL</td><td>5,240,000</td><td>5,240,000</td><td>–</td><td class="l">Hold at plan; test-and-control on large events</td></tr>
+        <tr><td>Outdoor</td><td>6,063,800</td><td>6,063,800</td><td>–</td><td class="l">As planned</td></tr>
+        <tr><td>Gift &amp; Printing</td><td>1,906,500</td><td>1,200,000</td><td class="neg">(706,500)</td><td class="l">Only ৳26.6 lakh left for 9 months</td></tr>
+        <tr><td>Dealer benefit</td><td>390,000</td><td>390,000</td><td>–</td><td class="l">As planned</td></tr>
+        <tr class="total"><td>Total</td><td>27,290,300</td><td>27,583,800</td><td>+293,500</td><td class="l">Within plan + Q1 unspent (৳4.6 lakh)</td></tr>
+      </table>
+      <div class="legend">Q1's unspent ATL (৳46.7 lakh) is not added to Q2; it stays available for Q3 airtime once the TVC exists.</div>
+    </div>
+    <div class="card">
+      <h3>Q2 calendar</h3>
+      <table>
+        <tr><td class="l" style="width:16%"><b>Oct</b></td><td class="l">World Animal Day (4 Oct) and World Egg Day (9 Oct) for layer feed · National Dealer Meet and dealer-development launch · OVC release · activation pilot in 2–3 districts · TVC production · wall calendar with tracking codes</td></tr>
+        <tr><td class="l"><b>Nov</b></td><td class="l">Winter poultry preparation campaign (broiler, layer, Sonali) · TVC on air · Best Farmer Award with newspaper · small fair stalls at livestock fairs · read activation pilot result</td></tr>
+        <tr><td class="l"><b>Dec</b></td><td class="l">Victory Day (16 Dec) content · TVC and docu-drama airing · influencer campaign · cattle-fattening outreach for the Eid-ul-Adha cycle · Q2 ROMI and competitor review</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card tablewrap" style="margin-top:14px">
+    <h3>Q2 scorecard (review at the end of each month)</h3>
+    <table>
+      <tr><th class="l">KPI</th><th>Q1 actual</th><th>Q2 target</th><th class="l">Source</th></tr>
+      <tr><td>Sales volume (MT)</td><td>54,758</td><td>54,000 (plan 51,000)</td><td class="l">Sales Monthwise</td></tr>
+      <tr><td>Market share (industry data)</td><td>2.4% (H1'26)</td><td>2.8–3.0%</td><td class="l">Market Share tab</td></tr>
+      <tr><td>Profit ROMI</td><td>4.0x</td><td>≥3.0x, measured by campaign</td><td class="l">ROMI Analysis tab</td></tr>
+      <tr><td>Share of spend with measured ROMI</td><td>0%</td><td>≥80%</td><td class="l">Campaign briefs</td></tr>
+      <tr><td>Channel utilisation</td><td>5%–430%</td><td>80–120% each</td><td class="l">Budget vs Actual tab</td></tr>
+      <tr><td>Marketing spend % of revenue</td><td>0.55%</td><td>0.8–0.9%</td><td class="l">Budget vs Actual tab</td></tr>
+      <tr><td>Tech seminar KPI</td><td>84%</td><td>100%</td><td class="l">KPI sheet</td></tr>
+      <tr><td>Competitors scored</td><td>0 of 14</td><td>14 of 14</td><td class="l">Competitor tab</td></tr>
+    </table>
+  </div>
+
+  <div class="callout" style="margin-top:14px"><b>Check in the budget planner:</b> the BTL sheet places the National Dealer Meet (৳35 lakh) in October in the monthly plan but in Q3–Q4 in the quarterly plan, and activation differs between the two (৳15 lakh vs ৳22.5 lakh). Confirm which is right before Q2 spending is approved.</div>
+</section>
+
+<footer>
+  <b>Assumptions:</b> realised price ≈ ৳58,915/MT (from the July sales target; replace with actual net price); base = Akij Jan–Jun'26 average volume; gross margin 16%. Segment and Akij channel scores are drafts.<br>
+  <b>Sources:</b> Campaign Wise ROMI Analysis (With Formula); Annual Marketing Budget Planner AAFL 2026-2027 (Budget Summary, Budget Tracker); Feed Industry Sales (Jun'26), Ranking sheet, which notes that its figures are compiled from several sources. Prepared 18 Oct 2026.
+</footer>
+</div>
+
+<script>
+(function(){
+  // Profit ROMI by month
+  var romi=[["Jul",-0.2],["Aug",5.4],["Sep",9.0],["Q1",4.0]], max=10, c=document.getElementById('romiChart');
+  romi.forEach(function(d){
+    var h=Math.max(4,Math.abs(d[1])/max*150);
+    c.insertAdjacentHTML('beforeend','<div class="vcol"><div class="vval">'+(d[1]<0?'−':'')+Math.abs(d[1]).toFixed(1)+'x</div><div class="vbar'+(d[1]<0?' neg':'')+'" style="height:'+h+'px"></div><div class="vlab">'+d[0]+'</div></div>');
+  });
+
+  // Budget utilisation
+  var util=[["ATL",5],["Digital",28],["Outdoor",76],["Dealer benefit",100],["Gift & Printing",261],["BTL",430]], umax=450, u=document.getElementById('utilChart');
+  util.forEach(function(d){
+    var cls=d[1]>100?'over':'under';
+    u.insertAdjacentHTML('beforeend','<div class="brow"><div class="name">'+d[0]+'</div><div class="track"><div class="fill '+cls+'" style="width:'+(d[1]/umax*100)+'%"></div><div class="ref" style="left:'+(100/umax*100)+'%"></div></div><div class="v">'+d[1]+'%</div></div>');
+  });
+
+  // Market share and growth
+  var co=[["Nourish",12.65,6.5],["71 Feed (Alal)",7.07,-0.1],["Paragon",6.14,2.3],["New Hope",5.99,19.6],["C.P",5.96,-0.4],["ACI Feed",5.62,19.1],["R.R.P",5.33,8.5],["Nahar Feeds",5.10,-5.4],["Quality",5.01,0.1],["Aman",4.31,-1.5],["Kazi",3.91,-30.8],["Teer Feed",3.86,3.0],["Provita",3.84,97.3],["Astha",3.31,10.2],["Akij",2.38,88.4],["Aftab",2.23,-8.7]];
+  var s=document.getElementById('shareChart');
+  co.forEach(function(d){
+    s.insertAdjacentHTML('beforeend','<div class="brow'+(d[0]==="Akij"?' akij':'')+'"><div class="name">'+d[0]+'</div><div class="track"><div class="fill" style="width:'+(d[1]/13*100)+'%"></div></div><div class="v">'+d[1].toFixed(1)+'%</div></div>');
+  });
+  var g=document.getElementById('growthChart'), lo=-35, hi=100, span=hi-lo, zero=(-lo)/span*100;
+  co.slice().sort(function(a,b){return b[2]-a[2]}).forEach(function(d){
+    var left=d[2]<0?(d[2]-lo)/span*100:zero, w=Math.abs(d[2])/span*100;
+    g.insertAdjacentHTML('beforeend','<div class="brow'+(d[0]==="Akij"?' akij':'')+'"><div class="name">'+d[0]+'</div><div class="track"><div class="fill" style="position:absolute;left:'+left+'%;width:'+w+'%;'+(d[2]<0&&d[0]!=="Akij"?'background:var(--bad)':'')+'"></div><div class="ref" style="left:'+((4.8-lo)/span*100)+'%"></div></div><div class="v">'+(d[2]>0?'+':'')+d[2].toFixed(0)+'%</div></div>');
+  });
+})();
+</script>
+</body>
+</html>
