@@ -1,5 +1,5 @@
 {
-  "name": "aafl-marketing-analysis",
+  "name": "aafl-strategic-marketing-analysis",
   "private": true,
   "scripts": {
     "dev": "npx wrangler dev",
